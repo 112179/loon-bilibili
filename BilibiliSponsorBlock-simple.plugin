@@ -1,0 +1,13 @@
+#!name = 哔哩哔哩净化（兼容版）
+#!desc = 旧版 Script 语法，无参数，兼容所有 Loon 版本。去开屏/首页广告；SponsorBlock 片段在进度条标记，并在有片段时弹通知。
+#!author = Minis / 112179
+#!homepage = https://github.com/112179/loon-bilibili
+#!date = 2026-11-17
+#!tag = 哔哩哔哩,去广告,SponsorBlock
+
+[Script]
+http-response ^https?:\/\/(app|api)\.bilibili\.com\/x\/v2\/(splash\/list|splash\/show|feed\/index) script-path=https://cdn.jsdelivr.net/gh/112179/loon-bilibili@v1.0.2/scripts/bilibili-clean.js, requires-body=true, timeout=10, tag=B站去广告
+http-response ^https?:\/\/api\.bilibili\.com\/x\/player\/(wbi\/)?v2 script-path=https://cdn.jsdelivr.net/gh/112179/loon-bilibili@v1.0.2/scripts/sponsorblock.js, requires-body=true, timeout=10, tag=SponsorBlock标记
+
+[MITM]
+hostname = app.bilibili.com, api.bilibili.com
