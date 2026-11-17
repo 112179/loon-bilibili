@@ -9,7 +9,7 @@
 DOMAIN, bsbsb.top, PROXY
 
 [Script]
-http-request ^https?:\/\/(grpc\.biliapi\.net|app\.bilibili\.com)\/bilibili\.community\.service\.dm\.v1\.DM\/DmSegMobile(\?.*)?$ script-path=https://cdn.jsdelivr.net/gh/112179/loon-bilibili@v1.1.2/scripts/bilibili-skip.js, requires-body=true, binary-body-mode=true, timeout=10, tag=空降助手
+http-request ^https?:\/\/(grpc\.biliapi\.net|app\.bilibili\.com)\/bilibili\.community\.service\.dm\.v1\.DM\/DmSegMobile(\?.*)?$ script-path=https://cdn.jsdelivr.net/gh/112179/loon-bilibili@v1.1.3/scripts/bilibili-skip.js, requires-body=true, binary-body-mode=true, timeout=10, tag=空降助手
 
 [MITM]
 hostname = grpc.biliapi.net, app.bilibili.com
