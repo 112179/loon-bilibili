@@ -1,0 +1,11 @@
+#!name = B站调试（临时）
+#!desc = 仅用于排查 Loon 是否命中 B 站接口：关键接口会弹通知并写日志，不改响应。排查完请删除。
+#!author = Minis
+#!date = 2026-11-17
+#!tag = 调试
+
+[Script]
+http-request ^https?:\/\/([a-z0-9-]+\.)*(bilibili\.com|biliapi\.net|bilivideo\.com)\// script-path=https://cdn.jsdelivr.net/gh/112179/loon-bilibili@main/scripts/debug.js, requires-body=false, timeout=10, tag=B站调试
+
+[MITM]
+hostname = *.bilibili.com, *.biliapi.net
