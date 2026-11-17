@@ -45,13 +45,13 @@ airborne:<毫秒>
 ## 二、安装自动跳过插件（推荐）
 
 ```text
-https://cdn.jsdelivr.net/gh/112179/loon-bilibili@v1.1.0/BilibiliSponsorBlock-auto.plugin
+https://cdn.jsdelivr.net/gh/112179/loon-bilibili@v1.1.1/BilibiliSponsorBlock-auto.plugin
 ```
 
 一键导入：
 
 ```text
-loon://import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2F112179%2Floon-bilibili%40v1.1.0%2FBilibiliSponsorBlock-auto.plugin
+loon://import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2F112179%2Floon-bilibili%40v1.1.1%2FBilibiliSponsorBlock-auto.plugin
 ```
 
 或手动：Loon → 配置 → 插件 → 右上角 `+` → 粘贴 URL。
