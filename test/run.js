@@ -204,6 +204,16 @@ function apiOK() {
     ok("URL 没有 bvid 时改用响应里的 bvid", r.calls.length === 1);
   }
   {
+    const r = await run(SB, {
+      store: {},
+      request: { url: PLAYER_URL },
+      response: { status: 200, body: playerBody() },
+      argument: { markers: true, notify: false, categories: "sponsor,bogus" },
+      http: apiOK
+    });
+    ok("未知类别被过滤", decodeURIComponent(r.calls[0].url).includes('categories=["sponsor"]'));
+  }
+  {
     const body = JSON.parse(playerBody());
     delete body.data.bvid;
     const r = await run(SB, {
