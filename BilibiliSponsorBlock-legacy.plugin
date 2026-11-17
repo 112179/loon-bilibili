@@ -6,8 +6,8 @@
 #!tag = 哔哩哔哩,去广告,SponsorBlock
 
 [Script]
-http-response ^https?:\/\/app\.bilibili\.com\/x\/v2\/(splash\/list|splash\/show|feed\/index) script-path=https://cdn.jsdelivr.net/gh/112179/loon-bilibili@v1.0.0/scripts/bilibili-clean.js, requires-body=true, timeout=10, tag=B站去广告
-http-response ^https?:\/\/api\.bilibili\.com\/x\/player\/(wbi\/)?v2 script-path=https://cdn.jsdelivr.net/gh/112179/loon-bilibili@v1.0.0/scripts/sponsorblock.js, requires-body=true, timeout=10, tag=SponsorBlock标记
+http-response ^https?:\/\/app\.bilibili\.com\/x\/v2\/(splash\/list|splash\/show|feed\/index) script-path=https://cdn.jsdelivr.net/gh/112179/loon-bilibili@v1.0.1/scripts/bilibili-clean.js, requires-body=true, timeout=10, tag=B站去广告
+http-response ^https?:\/\/api\.bilibili\.com\/x\/player\/(wbi\/)?v2 script-path=https://cdn.jsdelivr.net/gh/112179/loon-bilibili@v1.0.1/scripts/sponsorblock.js, requires-body=true, timeout=10, tag=SponsorBlock标记
 
 [MITM]
 hostname = app.bilibili.com, api.bilibili.com
