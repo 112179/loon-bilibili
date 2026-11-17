@@ -61,16 +61,17 @@
   var ttl = cached && cached.ok ? CACHE_MS : EMPTY_TTL;
   var useCache = cached && Date.now() - cached.t < ttl;
 
-  var segmentsPromise = useCache ? Promise.resolve(cached.s) : fetchSegments(bvid, cid);
+  var segmentsPromise = useCache ? Promise.resolve({ ok: cached.ok, s: cached.s }) : fetchSegments(bvid, cid);
 
   Promise.all([segmentsPromise, fetchReal(request, rawBody)]).then(function (results) {
-    var segments = results[0] || [];
+    var result = results[0] || { ok: false, s: [] };
+    var segments = result.s || [];
     var real = results[1];
 
     if (!real) return pass();
 
     if (!useCache) {
-      writeCache(cacheKey, { t: Date.now(), ok: true, s: segments });
+      writeCache(cacheKey, { t: Date.now(), ok: !!result.ok, s: segments });
     }
 
     var status = headerValue(real.headers, "grpc-status") || headerValue(real.h2_trailers, "grpc-status");
@@ -168,15 +169,17 @@
           "x-ext-version": "1.0.0"
         }
       }, function (error, response, data) {
-        if (error || !response || response.status !== 200 || !data) return resolve([]);
+        if (error || !response) return resolve({ ok: false, s: [] });
+        if (response.status === 404) return resolve({ ok: true, s: [] });
+        if (response.status !== 200 || !data) return resolve({ ok: false, s: [] });
 
         var list;
         try {
           list = JSON.parse(data);
         } catch (e) {
-          return resolve([]);
+          return resolve({ ok: false, s: [] });
         }
-        if (!Array.isArray(list)) return resolve([]);
+        if (!Array.isArray(list)) return resolve({ ok: false, s: [] });
 
         var out = [];
         var seen = {};
@@ -199,7 +202,7 @@
         });
 
         out.sort(function (a, b) { return a[0] - b[0]; });
-        resolve(out);
+        resolve({ ok: true, s: out });
       });
     });
   }
