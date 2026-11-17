@@ -72,15 +72,16 @@
 
     if (!real) return pass();
 
-    if (!useCache) {
-      writeCache(cacheKey, { t: Date.now(), ok: !!result.ok, s: segments });
+    if (!useCache && result.ok) {
+      writeCache(cacheKey, { t: Date.now(), ok: true, s: segments });
     }
 
     var status = headerValue(real.headers, "grpc-status") || headerValue(real.h2_trailers, "grpc-status");
     if (status && String(status) !== "0") return pass();
 
+    console.log("[空降助手] " + bvid + " segments=" + segments.length);
+
     if (segments.length) {
-      console.log("[空降助手] " + bvid + " 发现 " + segments.length + " 段");
       notifyOnce(bvid, segments.length);
     }
 
@@ -136,7 +137,7 @@
           url: url,
           headers: cleanRequestHeaders(req.headers),
           body: frame,
-          timeout: 3000,
+          timeout: 5000,
           "binary-mode": true,
           alpn: "h2"
         }, function (error, response, data) {
@@ -170,7 +171,7 @@
     return new Promise(function (resolve) {
       $httpClient.get({
         url: url,
-        timeout: 3000,
+        timeout: 5000,
         headers: {
           origin: "https://github.com/kokoryh/Sparkle/blob/master/release/surge/module/bilibili.sgmodule",
           "x-ext-version": "1.0.0"
@@ -256,7 +257,7 @@
       fieldVarint(5, 16777215),             // color
       fieldString(6, "1948dd5d"),           // mid_hash
       fieldString(7, AIRBORNE_CONTENT),     // content
-      fieldVarint(8, 1735660800),           // ctime
+      fieldVarint(8, Math.floor(Date.now() / 1000)), // ctime
       fieldVarint(9, 11),                   // weight
       fieldString(10, "airborne:" + endMs), // action -> 空降
       fieldString(12, String(id)),          // id_str
