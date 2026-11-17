@@ -1,0 +1,22 @@
+#!name = 哔哩哔哩净化（SponsorBlock）
+#!desc = 清理 B 站开屏与首页信息流广告；用 SponsorBlock 数据在播放器进度条标记恰饭片段，点标记可跳到片段结束处。Loon 只能改接口，无法强制 App 自动 seek。
+#!author = Minis / 112179
+#!homepage = https://github.com/112179/loon-bilibili
+#!date = 2026-11-17
+#!tag = 哔哩哔哩,去广告,SponsorBlock
+#!system = iOS,iPadOS
+#!system_version = 15
+#!loon_version = 3.5.1(983)
+
+[Argument]
+clean = switch,true,tag=清理广告,desc=移除开屏和首页信息流中的广告卡片
+markers = switch,true,tag=进度条标记,desc=在进度条标记赞助片段结束位置（实验性）
+notify = switch,false,tag=片段通知,desc=打开视频时通知赞助片段的起止时间
+categories = input,"sponsor,selfpromo",tag=片段类别,desc=逗号分隔的类别名
+
+[Script]
+response if ${url} ~= /^https:\/\/app\.bilibili\.com\/x\/v2\/(splash\/list|splash\/show|feed\/index)/ && ${clean} == true then script("https://cdn.jsdelivr.net/gh/112179/loon-bilibili@main/scripts/bilibili-clean.js") with requires_body=true, timeout=10, tag="B站去广告"
+response if ${url} ~= /^https:\/\/api\.bilibili\.com\/x\/player\/(wbi\/)?v2/ && (${markers} == true || ${notify} == true) then script("https://cdn.jsdelivr.net/gh/112179/loon-bilibili@main/scripts/sponsorblock.js", {${markers}, ${notify}, ${categories}}) with requires_body=true, timeout=10, tag="SponsorBlock 标记"
+
+[MITM]
+hostname = app.bilibili.com, api.bilibili.com
