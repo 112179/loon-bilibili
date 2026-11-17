@@ -56,6 +56,8 @@
   var bvid = aidToBvid(aid);
   if (!bvid) return pass();
 
+  console.log("[空降助手] DmSegMobile " + bvid + " / " + cid);
+
   var cacheKey = "bsp:1:" + bvid + ":" + cid;
   var cached = readCache(cacheKey);
   var ttl = cached && cached.ok ? CACHE_MS : EMPTY_TTL;
@@ -76,6 +78,11 @@
 
     var status = headerValue(real.headers, "grpc-status") || headerValue(real.h2_trailers, "grpc-status");
     if (status && String(status) !== "0") return pass();
+
+    if (segments.length) {
+      console.log("[空降助手] " + bvid + " 发现 " + segments.length + " 段");
+      notifyOnce(bvid, segments.length);
+    }
 
     if (!segments.length) {
       return $done({
@@ -488,6 +495,16 @@
       return out;
     }
     return null;
+  }
+
+  function notifyOnce(bvid, count) {
+    try {
+      var key = "bsp:notice:" + bvid;
+      var last = Number($persistentStore.read(key) || 0);
+      if (Date.now() - last < 10 * 60 * 1000) return;
+      $persistentStore.write(String(Date.now()), key);
+      $notification.post("空降助手", "发现 " + count + " 段广告", "已注入弹幕，播放到广告开头会自动跳过");
+    } catch (e) {}
   }
 
   function readCache(key) {
