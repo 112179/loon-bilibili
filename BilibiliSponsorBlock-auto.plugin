@@ -1,0 +1,15 @@
+#!name=哔哩哔哩空降助手（SponsorBlock）
+#!desc=拦截 B 站弹幕接口，把 SponsorBlock 的赞助片段注入为 airborne 弹幕；播放到广告开头约 2 秒时自动跳到片段结束。需要开启 MitM-over-HTTP/2。
+#!author=Minis / 112179
+#!homepage=https://github.com/112179/loon-bilibili
+#!date=2026-11-17
+#!tag=哔哩哔哩,去广告,SponsorBlock
+
+[Rule]
+DOMAIN, bsbsb.top, PROXY
+
+[Script]
+http-request ^https?:\/\/(grpc\.biliapi\.net|app\.bilibili\.com)\/bilibili\.community\.service\.dm\.v1\.DM\/DmSegMobile(\?.*)?$ script-path=https://cdn.jsdelivr.net/gh/112179/loon-bilibili@v1.1.0/scripts/bilibili-skip.js, requires-body=true, binary-body-mode=true, timeout=10, tag=空降助手
+
+[MITM]
+hostname = grpc.biliapi.net, app.bilibili.com
