@@ -44,19 +44,19 @@ test/run.js                          本地 Node 测试（模拟 Loon 运行时�
 新版 Loon（3.5.1 build 983+）：
 
 ```
-https://cdn.jsdelivr.net/gh/112179/loon-bilibili@main/BilibiliSponsorBlock.plugin
+https://cdn.jsdelivr.net/gh/112179/loon-bilibili@v1.0.0/BilibiliSponsorBlock.plugin
 ```
 
 一键导入：
 
 ```
-loon://import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2F112179%2Floon-bilibili%40main%2FBilibiliSponsorBlock.plugin
+loon://import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2F112179%2Floon-bilibili%40v1.0.0%2FBilibiliSponsorBlock.plugin
 ```
 
 旧版 Loon（3.5.1 build 982 及更早）：
 
 ```
-https://cdn.jsdelivr.net/gh/112179/loon-bilibili@main/BilibiliSponsorBlock-legacy.plugin
+https://cdn.jsdelivr.net/gh/112179/loon-bilibili@v1.0.0/BilibiliSponsorBlock-legacy.plugin
 ```
 
 GitHub Raw 备用地址（jsDelivr 打不开时）：
