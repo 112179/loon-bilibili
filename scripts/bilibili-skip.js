@@ -244,28 +244,26 @@
   function encodeDanmaku(segment, index) {
     var startMs = Math.floor(segment[0] * 1000) + 2000;
     var endMs = Math.floor(segment[1] * 1000);
-    var id = 700000000000 + Math.floor(segment[0] * 1000) + index;
+    var id = index + 1;
 
+    // 字段与 kokoryh 的 createAirborneDanmaku 完全对齐；
+    // 默认值字段（pool=0、colorful=0、animation=""、extra=""）按 protobuf 惯例省略。
     return concat([
-      fieldVarint(1, id),                 // id
-      fieldVarint(2, startMs),            // progress
-      fieldVarint(3, 5),                  // mode: 顶部
-      fieldVarint(4, 50),                 // fontsize
-      fieldVarint(5, 16777215),           // color
-      fieldString(6, "1948dd5d"),         // mid_hash
-      fieldString(7, AIRBORNE_CONTENT),   // content
-      fieldVarint(8, Math.floor(Date.now() / 1000)), // ctime
-      fieldVarint(9, 11),                 // weight
+      fieldVarint(1, id),                   // id
+      fieldVarint(2, startMs),              // progress
+      fieldVarint(3, 5),                    // mode: 顶部
+      fieldVarint(4, 50),                   // fontsize
+      fieldVarint(5, 16777215),             // color
+      fieldString(6, "1948dd5d"),           // mid_hash
+      fieldString(7, AIRBORNE_CONTENT),     // content
+      fieldVarint(8, 1735660800),           // ctime
+      fieldVarint(9, 11),                   // weight
       fieldString(10, "airborne:" + endMs), // action -> 空降
-      fieldVarint(11, 0),                 // pool
-      fieldString(12, String(id)),        // id_str
-      fieldVarint(13, 1310724),           // attr
-      fieldString(22, ""),                // animation
-      fieldString(23, ""),                // extra
-      fieldVarint(24, 0),                 // colorful
-      fieldVarint(25, 1),                 // type
-      fieldVarint(26, FAKE_OID),          // oid
-      fieldVarint(27, 1)                  // dm_from
+      fieldString(12, String(id)),          // id_str
+      fieldVarint(13, 1310724),             // attr
+      fieldVarint(25, 1),                   // type
+      fieldVarint(26, FAKE_OID),            // oid
+      fieldVarint(27, 1)                    // dm_from
     ]);
   }
 
