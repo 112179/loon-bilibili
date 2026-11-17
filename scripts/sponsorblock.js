@@ -19,7 +19,7 @@
 
   var arg = (typeof $argument === "object" && $argument) ? $argument : {};
   var wantMarkers = arg.markers !== false;
-  var wantNotify = arg.notify === true;
+  var wantNotify = arg.notify === undefined ? true : arg.notify === true;
   var categories = normalizeCategories(arg.categories);
 
   var requestURL = ($request && $request.url) || "";
