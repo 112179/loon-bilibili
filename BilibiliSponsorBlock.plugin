@@ -15,7 +15,7 @@ notify = switch,false,tag=片段通知,desc=打开视频时通知赞助片段的
 categories = input,"sponsor,selfpromo",tag=片段类别,desc=逗号分隔的类别名
 
 [Script]
-response if ${url} ~= /^https:\/\/app\.bilibili\.com\/x\/v2\/(splash\/list|splash\/show|feed\/index)/ && ${clean} == true then script("https://cdn.jsdelivr.net/gh/112179/loon-bilibili@main/scripts/bilibili-clean.js") with requires_body=true, timeout=10, tag="B站去广告"
+response if ${url} ~= /^https:\/\/app\.bilibili\.com\/x\/v2\/(splash\/list|splash\/show|feed\/index) && ${clean} == true then script("https://cdn.jsdelivr.net/gh/112179/loon-bilibili@main/scripts/bilibili-clean.js") with requires_body=true, timeout=10, tag="B站去广告"
 response if ${url} ~= /^https:\/\/api\.bilibili\.com\/x\/player\/(wbi\/)?v2/ && (${markers} == true || ${notify} == true) then script("https://cdn.jsdelivr.net/gh/112179/loon-bilibili@main/scripts/sponsorblock.js", {${markers}, ${notify}, ${categories}}) with requires_body=true, timeout=10, tag="SponsorBlock 标记"
 
 [MITM]
