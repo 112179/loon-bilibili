@@ -249,12 +249,23 @@
 
   function normalizeCategories(value) {
     var fallback = ["sponsor", "selfpromo"];
+    var known = {
+      sponsor: 1,
+      selfpromo: 1,
+      interaction: 1,
+      intro: 1,
+      outro: 1,
+      preview: 1,
+      music_offtopic: 1,
+      poi_highlight: 1,
+      filler: 1
+    };
     if (typeof value !== "string" || !value.trim()) return fallback;
 
     var list = value.split(",").map(function (item) {
       return item.trim().toLowerCase();
     }).filter(function (item) {
-      return /^[a-z_]+$/.test(item);
+      return !!known[item];
     });
 
     return list.length ? list : fallback;
